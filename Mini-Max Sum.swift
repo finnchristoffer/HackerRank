@@ -1,23 +1,28 @@
 import Foundation
 
-let arr = readLine()!.split(separator: " ").map{ Int($0)! }
+/*
+ * Complete the 'miniMaxSum' function below.
+ *
+ * The function accepts INTEGER_ARRAY arr as parameter.
+ */
 
 func miniMaxSum(arr: [Int]) -> Void {
-    var minSum = Int.max
-    var maxSum = Int.min
-
-    for i in 0..<arr.count {
-        var currentSum = 0
-        for j in 0..<arr.count {
-            if i != j {
-                currentSum += arr[j]
-            }
-        }
-        minSum = min(minSum, currentSum)
-        maxSum = max(maxSum, currentSum)
-    }
-
+    let sortedArr = arr.sorted()
+    
+    let minSum = sortedArr[0..<4].reduce(0,+)
+    let maxSum = sortedArr[1...4].reduce(0,+)
+    
     print("\(minSum) \(maxSum)")
 }
+
+guard let arrTemp = readLine()?.replacingOccurrences(of: "\\s+$", with: "", options: .regularExpression) else { fatalError("Bad input") }
+
+let arr: [Int] = arrTemp.split(separator: " ").map {
+    if let arrItem = Int($0) {
+        return arrItem
+    } else { fatalError("Bad input") }
+}
+
+guard arr.count == 5 else { fatalError("Bad input") }
 
 miniMaxSum(arr: arr)
